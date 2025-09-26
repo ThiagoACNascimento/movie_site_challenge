@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Topbar from "./ui/header/topnav";
-import Sidebar from "./ui/header/sidenav";
+import Topbar from "./components/main_page/header/topnav";
+import Sidebar from "./components/main_page/header/sidenav";
+import Hero from "./components/main_page/background/BackgroundRotator";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -11,18 +12,18 @@ export const metadata: Metadata = {
 export default function RootLayout({ children, }: { children: React.ReactNode; }) {
   return (
     <html lang="en">
-      <body className="bg-[#06253A]">
-       
+      <body>
+
         <div className="hidden md:block">  {/* Topbar só em telas ≥ md */}
           <Topbar />
         </div>
 
-        
         <div className="block md:hidden"> {/* Sidebar só em telas < md */}
           <Sidebar />
         </div>
 
         {children}
+
       </body>
     </html>
   );

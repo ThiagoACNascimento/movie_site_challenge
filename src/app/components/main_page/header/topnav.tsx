@@ -5,7 +5,7 @@ import { Navlinks_left, Navlinks_right } from "./nav-links-top";
 
 export default function Topbar() {
   return (
-    <header className="bg-[#06253A] text-white"> {/*cor do background, texto branco*/}
+    <header className="bg-[#1D1E2C] text-white bg-gradient-to-b"> {/*cor do background, texto branco*/}
       <div className="mx-auto max-w-7xl px-4 sm:px-6"> {/* Deixa no meio, tamanho do espacamento, padding u e b em 4,  px-6 se tela >= 640px*/}
         <div className="flex h-20 items-center justify-between">{/*display flex (lado a lado), autura 80px, alinha no centro e espaco entre eles*/}
           

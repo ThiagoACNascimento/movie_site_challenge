@@ -19,7 +19,7 @@ export default function Sidebar() {
   return (
     <>
       {/* botão de barras (só no mobile) */}
-      <div className="md:hidden bg-[#06253A] text-white">{/*maior que 768px: fica escondido, background, texto branco*/}
+      <div className="md:hidden bg-[#1D1E2C] text-white">{/*maior que 768px: fica escondido, background, texto branco*/}
         <div className="w-full px-4 sm:px-6 h-14 flex items-center justify-start"> {/*margin t e b auto, max comprimento, padding de 16px, maior que 640px aplica padding 24px, altura 56px, flex, itens no centro, espaco entre eles*/}
           <button
             onClick={() => setOpen(true)}
@@ -47,7 +47,7 @@ export default function Sidebar() {
       {/* drawer lateral */}
       <aside
         className={`
-          fixed inset-y-0 left-0 w-72 bg-[#0A3048] border-r border-white/10
+          fixed inset-y-0 left-0 w-72 bg-[#1D1E2C] border-r border-white/10
           transition-transform duration-200
           ${open ? "translate-x-0" : "-translate-x-full"}
           md:hidden z-50
