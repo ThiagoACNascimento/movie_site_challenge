@@ -1,44 +1,42 @@
 type Props = {
-  value: number;      // valor 
-  size?: number;      // tamanho
-  stroke?: number;    // tamanho do anel em volta
+  value: number;   // aceita 0–100 ou 0–10
+  size?: number;   // px
+  stroke?: number; // px
 };
 
-// funcao que retorna o anel com base no valor, tamanho e stroke
-export default function RatingRing({value, size, stroke}: Props) {
-  // clamp e % (0..100)
-  const pct = Math.max(0, Math.min(100, (value ?? 0) * 10));
+export default function RatingRing({ value, size = 40, stroke = 4 }: Props) {
+  // aceita 0–10 (escala) e 0–100
+  const pct = Math.max(0, Math.min(100, value <= 10 ? value * 10 : value));
 
-  // geometria do círculo
-  const r = (size - stroke) / 2;           // raio visível
-  const c = 2 * Math.PI * r;               // circunf.
-  const offset = c * (1 - pct / 100);      // quanto falta pra completar
+  // geometria (evita raio negativo/NaN)
+  const r = Math.max(1, (size - stroke) / 2);
+  const c = 2 * Math.PI * r;
+  const offset = c * (1 - pct / 100);
 
-  // cor por faixa
-  const color =
-    value >= 7 ? "#22c55e" : value >= 5 ? "#eab308" : "#ef4444"; // verde / amarelo / vermelho
+  // cores por faixa (baseado no valor 0–10 para a régua)
+  const base = value <= 10 ? value : value / 10;
+  const color = base >= 7 ? "#22c55e" : base >= 5 ? "#eab308" : "#ef4444";
 
   return (
-    <div
-      className={`relative flex items-center justify-center`} // relativo, flex, itens no centro e justifica no centro
-      style={{ width: size, height: size }} // tamanhos
-    >
+    <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
+      {/* chip de fundo ATRÁS */}
+      <span className="absolute inset-0 rounded-full bg-black/35 pointer-events-none" aria-hidden />
+
       <svg
         width={size}
         height={size}
         viewBox={`0 0 ${size} ${size}`}
-        className="block rotate-[-90deg]" // bloco e comeca no eixo do tpo
-      > {/*Sera um svg*/}
-        {/* dois circulos, um que sera o circulo padrao e o de progresso*/}
+        className="block rotate-[-90deg]"
+        aria-hidden
+      >
         <circle
           cx={size / 2}
           cy={size / 2}
           r={r}
           fill="none"
           stroke="rgba(255,255,255,0.18)"
-          strokeWidth={stroke} 
+          strokeWidth={stroke}
         />
-        {/* progresso */}
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -50,17 +48,13 @@ export default function RatingRing({value, size, stroke}: Props) {
           strokeDasharray={c}
           strokeDashoffset={offset}
           style={{ transition: "stroke-dashoffset 400ms ease" }}
-          // centro do circulo, raio, disco nao solido, cor, espessura, arredondada, comprimento, quanto ele ta preenchido, animacao de preenchimento
         />
       </svg>
 
-      {/* label central */}
-      <span className="absolute rotate-0 text-[11px] font-semibold text-white">
-        {value.toFixed(1)}
+      {/* label por cima */}
+      <span className="absolute rotate-0 text-[11px] font-semibold text-white select-none z-10">
+        {(base).toFixed(1)}
       </span>
-
-      {/* fundo “chip” sutil */}
-      <span className="absolute inset-0 rounded-full bg-black/35" />
     </div>
   );
 }

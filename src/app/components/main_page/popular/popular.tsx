@@ -1,25 +1,34 @@
+// app/components/main_page/catalog/catalogSection.tsx
 "use client";
 
 import { useEffect, useState } from "react";
-import RatingRing from "@/app/ui/rating-ring";
 import ButtonGroup from "@/app/ui/buttonGroup";
-import SkeletonCard from "@/app/ui/skeletonPoster";
+import SkeletonCard from "@/app/ui/skeletonPoster"; 
+import RatingRing from "@/app/ui/rating-ring";
 
-type Range = "day" | "week";
+type Category = "streaming" | "tv" | "rent" | "theater";
 
-type TrendingItem = {
+type Item = {
   id: number;
   title: string;
   poster: string | null;
-  vote: number; // 0–100
+  vote: number;
   year: number | null;
   month: string | null;
   day: number | null;
 };
 
-export default function TrendingSection() {
-  const [range, setRange] = useState<Range>("day");
-  const [items, setItems] = useState<TrendingItem[]>([]);
+const OPTIONS: Category[] = ["streaming", "tv", "rent", "theater"];
+const LABELS: Record<Category, string> = {
+  streaming: "Streaming",
+  tv: "On TV",
+  rent: "For Rent",
+  theater: "In Theaters",
+};
+
+export default function Popular() {
+  const [category, setCategory] = useState<Category>("streaming");
+  const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [hoverPoster, setHoverPoster] = useState<string | null>(null);
@@ -30,29 +39,29 @@ export default function TrendingSection() {
     {
       setLoading(true);
       setError(null);
-
       try 
       {
-        const res = await fetch(`/api/tmdb/trending?range=${range}&limit=20`, 
+        const res = await fetch(`/api/tmdb/popular?category=${category}&limit=20`, 
         {
           cache: "no-store",
         });
 
         if (!res.ok) 
           throw new Error(`Erro ${res.status}: ${res.statusText}`);
-        
-        const data: { ok: boolean; items: TrendingItem[]; error?: string } = await res.json();
 
+        const data: { ok: boolean; items: Item[]; error?: string } = await res.json();
         if (!data.ok) 
           throw new Error(data.error || "Falha na API");
 
-        if (alive) setItems(data.items ?? []);
-      } 
-      catch (err: any) 
-      {
-        console.error("[Trending API Error]", err);
         if (alive) 
-          setError(err.message);
+          setItems(data.items ?? []);
+
+      } 
+      catch (e: any) 
+      {
+        if (alive) 
+          setError(e.message || "Erro ao carregar");
+        console.error("[Catalog API Error]", e);
       } 
       finally 
       {
@@ -64,34 +73,31 @@ export default function TrendingSection() {
     return () => {
       alive = false;
     };
-  }, [range]);
+  }, [category]);
 
   return (
     <section className="max-w-7xl mx-auto w-full px-6 sm:px-10">
       <header className="flex items-center justify-between gap-6">
-        <h3 className="text-white text-2xl font-semibold z-1">Trending</h3>
+        <h3 className="text-white text-2xl font-semibold z-10">What's Popular</h3>
 
         <div
           role="tablist"
-          aria-label="Trending range"
+          aria-label="Catalog categories"
           className="inline-flex rounded-full bg-stone-800 p-1 ring-1 ring-white/10"
         >
           <ButtonGroup
-            options={["day", "week"]}
-            selected={range}
-            onChange={setRange}
-            labels={{ day: "Today", week: "This week" }}
+            options={OPTIONS}
+            selected={category}
+            onChange={setCategory}
+            labels={LABELS}
           />
         </div>
       </header>
 
-      {/*background no houver*/}
       <div className="relative mt-2 -mx-6 sm:-mx-10 h-0">
         <div
           aria-hidden
-          className={`pointer-events-none absolute inset-x-0 -top-8 h-64 transition-opacity duration-500${
-            hoverPoster ? "opacity-100" : "opacity-0"
-          }`}
+          className={`pointer-events-none absolute inset-x-0 -top-8 h-64 transition-opacity duration-500 ${hoverPoster ? "opacity-100" : "opacity-0"}`}
           style={{
             backgroundImage: hoverPoster
               ? `linear-gradient(to bottom, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,1) 100%), url(${hoverPoster})`
@@ -103,10 +109,9 @@ export default function TrendingSection() {
         />
       </div>
 
-      {/*Lista*/}
       <div className="mt-4 flex gap-4 overflow-x-auto pb-3 [&>*]:shrink-0 relative scrollbar scrollbar-hide-until-hover">
         {loading ? (
-          <SkeletonCard count={10} width="w-40 sm:w-48" height="aspect-[2/3]" />
+          <SkeletonCard count={12} width="w-40 sm:w-48" height="aspect-[2/3]" />
         ) : error ? (
           <p className="text-red-400">{error}</p>
         ) : (
@@ -145,7 +150,7 @@ export default function TrendingSection() {
               </div>
 
               <h4 className="mt-4 line-clamp-2 text-white/90 text-sm font-bold">{it.title}</h4>
-              <p className="text-white/60 text-xs">
+               <p className="text-white/60 text-xs">
                 {it.month} {it.day}, {it.year}
               </p>
             </article>
