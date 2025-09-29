@@ -28,13 +28,13 @@ body {
 /* Estilo base para Firefox */
 .scrollbar {
   scrollbar-width: thin; /* thin | auto | none */
-  scrollbar-color: rgba(255,255,255,.35) transparent; /* thumb | track */
+  scrollbar-color: rgba(255, 255, 255, 0.35) transparent; /* thumb | track */
 }
 
 /* WebKit (Chrome, Edge, Safari) */
 .scrollbar::-webkit-scrollbar {
-  height: 8px;           /* scroll HORIZONTAL */
-  width: 8px;            /* scroll VERTICAL (se usar em colunas tb) */
+  height: 8px; /* scroll HORIZONTAL */
+  width: 8px; /* scroll VERTICAL (se usar em colunas tb) */
 }
 
 .scrollbar::-webkit-scrollbar-track {
@@ -42,12 +42,12 @@ body {
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,.25);
+  background: rgba(255, 255, 255, 0.25);
   border-radius: 9999px;
 }
 
 .scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255,255,255,.45);
+  background: rgba(255, 255, 255, 0.45);
 }
 
 /* Só mostra a barra quando o container estiver em :hover (Chrome/Edge/Safari) */
@@ -55,11 +55,10 @@ body {
   background: transparent;
 }
 .scrollbar-hide-until-hover:hover::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,.35);
+  background: rgba(255, 255, 255, 0.35);
 }
 
 /* Melhor scroll no iOS */
 .scrollbar {
   -webkit-overflow-scrolling: touch;
 }
-

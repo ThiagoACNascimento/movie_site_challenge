@@ -26,38 +26,28 @@ export default function TrendingSection() {
 
   useEffect(() => {
     let alive = true;
-    (async () => 
-    {
+    (async () => {
       setLoading(true);
       setError(null);
 
-      try 
-      {
-        const res = await fetch(`/api/tmdb/trending?range=${range}&limit=20`, 
-        {
+      try {
+        const res = await fetch(`/api/tmdb/trending?range=${range}&limit=20`, {
           cache: "no-store",
         });
 
-        if (!res.ok) 
-          throw new Error(`Erro ${res.status}: ${res.statusText}`);
-        
-        const data: { ok: boolean; items: TrendingItem[]; error?: string } = await res.json();
+        if (!res.ok) throw new Error(`Erro ${res.status}: ${res.statusText}`);
 
-        if (!data.ok) 
-          throw new Error(data.error || "Falha na API");
+        const data: { ok: boolean; items: TrendingItem[]; error?: string } =
+          await res.json();
+
+        if (!data.ok) throw new Error(data.error || "Falha na API");
 
         if (alive) setItems(data.items ?? []);
-      } 
-      catch (err: any) 
-      {
+      } catch (err: any) {
         console.error("[Trending API Error]", err);
-        if (alive) 
-          setError(err.message);
-      } 
-      finally 
-      {
-        if (alive) 
-          setLoading(false);
+        if (alive) setError(err.message);
+      } finally {
+        if (alive) setLoading(false);
       }
     })();
 
@@ -131,7 +121,11 @@ export default function TrendingSection() {
                         aria-hidden
                         className="pointer-events-none absolute inset-x-0 -bottom-1 h-20 bg-gradient-to-t from-black to-transparent z-10"
                       />
-                      <a href="#" className="absolute inset-0 z-30" aria-label={it.title} />
+                      <a
+                        href="#"
+                        className="absolute inset-0 z-30"
+                        aria-label={it.title}
+                      />
                     </>
                   ) : (
                     <div className="h-full w-full grid place-items-center text-white/60 text-sm">
@@ -144,7 +138,9 @@ export default function TrendingSection() {
                 </div>
               </div>
 
-              <h4 className="mt-4 line-clamp-2 text-white/90 text-sm font-bold">{it.title}</h4>
+              <h4 className="mt-4 line-clamp-2 text-white/90 text-sm font-bold">
+                {it.title}
+              </h4>
               <p className="text-white/60 text-xs">
                 {it.month} {it.day}, {it.year}
               </p>

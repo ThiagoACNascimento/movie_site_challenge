@@ -1,6 +1,6 @@
 type Props = {
-  value: number;   // aceita 0–100 ou 0–10
-  size?: number;   // px
+  value: number; // aceita 0–100 ou 0–10
+  size?: number; // px
   stroke?: number; // px
 };
 
@@ -18,9 +18,15 @@ export default function RatingRing({ value, size = 40, stroke = 4 }: Props) {
   const color = base >= 7 ? "#22c55e" : base >= 5 ? "#eab308" : "#ef4444";
 
   return (
-    <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
+    <div
+      className="relative flex items-center justify-center"
+      style={{ width: size, height: size }}
+    >
       {/* chip de fundo ATRÁS */}
-      <span className="absolute inset-0 rounded-full bg-black/35 pointer-events-none" aria-hidden />
+      <span
+        className="absolute inset-0 rounded-full bg-black/35 pointer-events-none"
+        aria-hidden
+      />
 
       <svg
         width={size}
@@ -53,7 +59,7 @@ export default function RatingRing({ value, size = 40, stroke = 4 }: Props) {
 
       {/* label por cima */}
       <span className="absolute rotate-0 text-[11px] font-semibold text-white select-none z-10">
-        {(base).toFixed(1)}
+        {base.toFixed(1)}
       </span>
     </div>
   );

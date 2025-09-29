@@ -15,7 +15,13 @@ type Item = {
 };
 
 const OPTIONS: Category[] = ["popular", "streaming", "tv", "rent", "theater"];
-const LABELS = { popular: "Popular", streaming: "Streaming", tv: "On TV", rent: "For Rent", theater: "In Theaters" } as const;
+const LABELS = {
+  popular: "Popular",
+  streaming: "Streaming",
+  tv: "On TV",
+  rent: "For Rent",
+  theater: "In Theaters",
+} as const;
 
 export default function TrailerSection() {
   const [category, setCategory] = useState<Category>("popular");
@@ -27,40 +33,39 @@ export default function TrailerSection() {
 
   useEffect(() => {
     let alive = true;
-    (async () => 
-    {
+    (async () => {
       setLoading(true);
       setError(null);
-      try 
-      {
-        const res = await fetch(`/api/tmdb/trailer?category=${category}&limit=8`, { cache: "no-store" });
+      try {
+        const res = await fetch(
+          `/api/tmdb/trailer?category=${category}&limit=8`,
+          { cache: "no-store" },
+        );
 
-        if (!res.ok) 
-          throw new Error(`HTTP ${res.status} ${res.statusText}`);
+        if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
 
-        const data: { ok: boolean; items: Item[]; error?: string } = await res.json();
-        
-        if (!data.ok) 
-          throw new Error(data.error || "Falha na API");
+        const data: { ok: boolean; items: Item[]; error?: string } =
+          await res.json();
 
-        if (alive) 
-          setItems(data.items ?? []);
-      } 
-      catch (e: any) 
-      {
-        if (alive) 
-          setError(e.message || "Erro ao carregar trailers");
+        if (!data.ok) throw new Error(data.error || "Falha na API");
+
+        if (alive) setItems(data.items ?? []);
+      } catch (e: any) {
+        if (alive) setError(e.message || "Erro ao carregar trailers");
         console.error("Falha na API", e);
-      } 
-      finally {
+      } finally {
         if (alive) setLoading(false);
       }
     })();
-    return () => { alive = false; };
+    return () => {
+      alive = false;
+    };
   }, [category]);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setActive(null); };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActive(null);
+    };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
@@ -71,9 +76,20 @@ export default function TrailerSection() {
   return (
     <section className="max-w-7xl mx-auto w-full px-6 sm:px-10">
       <header className="flex items-center justify-between gap-6">
-        <h3 className="text-white text-2xl font-semibold z-1">Latest Trailers</h3>
-        <div role="tablist" aria-label="Trailer categories" className="inline-flex rounded-full bg-stone-800 p-1 ring-1 ring-white/10">
-          <ButtonGroup options={OPTIONS} selected={category} onChange={setCategory} labels={LABELS as any} />
+        <h3 className="text-white text-2xl font-semibold z-1">
+          Latest Trailers
+        </h3>
+        <div
+          role="tablist"
+          aria-label="Trailer categories"
+          className="inline-flex rounded-full bg-stone-800 p-1 ring-1 ring-white/10"
+        >
+          <ButtonGroup
+            options={OPTIONS}
+            selected={category}
+            onChange={setCategory}
+            labels={LABELS as any}
+          />
         </div>
       </header>
 
@@ -110,14 +126,23 @@ export default function TrailerSection() {
                   {/*thumb do youtube*/}
                   <img
                     src={it.youtubeThumbMax}
-                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = it.youtubeThumbHQ; }}
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src =
+                        it.youtubeThumbHQ;
+                    }}
                     alt={it.title}
                     className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                     loading="lazy"
                   />
 
                   <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 grid place-items-center">
-                    <svg width="56" height="56" viewBox="0 0 24 24" fill="currentColor" className="text-white drop-shadow">
+                    <svg
+                      width="56"
+                      height="56"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="text-white drop-shadow"
+                    >
                       <path d="M8 5v14l11-7z" />
                     </svg>
                   </div>
@@ -130,18 +155,29 @@ export default function TrailerSection() {
                 </div>
               </div>
 
-              <h4 className="mt-4 line-clamp-2 text-white/90 text-sm font-bold text-center">{it.title}</h4>
+              <h4 className="mt-4 line-clamp-2 text-white/90 text-sm font-bold text-center">
+                {it.title}
+              </h4>
             </article>
           ))
         )}
 
-        <div aria-hidden className="pointer-events-none sticky right-0 self-stretch w-12 z-10 bg-gradient-to-l from-black to-transparent" />
+        <div
+          aria-hidden
+          className="pointer-events-none sticky right-0 self-stretch w-12 z-10 bg-gradient-to-l from-black to-transparent"
+        />
       </div>
 
       {/*Video do youtube*/}
       {active && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm grid place-items-center p-4" onClick={close}>
-          <div className="w-full max-w-5xl aspect-video bg-black rounded-xl overflow-hidden ring-1 ring-white/10" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm grid place-items-center p-4"
+          onClick={close}
+        >
+          <div
+            className="w-full max-w-5xl aspect-video bg-black rounded-xl overflow-hidden ring-1 ring-white/10"
+            onClick={(e) => e.stopPropagation()}
+          >
             <iframe
               className="w-full h-full"
               src={`https://www.youtube.com/embed/${active.youtubeKey}?autoplay=1&rel=0&modestbranding=1`}
@@ -150,7 +186,10 @@ export default function TrailerSection() {
               allowFullScreen
             />
           </div>
-          <button onClick={close} className="absolute top-4 right-4 text-white/80 hover:text-white text-sm px-3 py-1 rounded-md bg-white/10 ring-1 ring-white/20">
+          <button
+            onClick={close}
+            className="absolute top-4 right-4 text-white/80 hover:text-white text-sm px-3 py-1 rounded-md bg-white/10 ring-1 ring-white/20"
+          >
             Fechar
           </button>
         </div>

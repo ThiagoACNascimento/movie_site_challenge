@@ -11,8 +11,7 @@ export function withLeadingSlash(path: string) {
 export function useCloseOnEsc(cb: () => void) {
   React.useEffect(() => {
     function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") 
-        cb();
+      if (e.key === "Escape") cb();
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -31,20 +30,26 @@ export function MobileAccordion({ item }: { item: NavItem }) {
         aria-controls={`section-${item.name}`}
       >
         <h3 className="text-white">{item.name}</h3>
-        <span className={`transition-transform ${open ? "rotate-180" : ""}`}>▾</span>
-      </button> {/*tipo botao, quando clica muda o estado para o contrario do atual, comprimento completo, flex, itens no centro, espaco entre eles, padding l e r, padding t e b, redondo, background, leitor, nome e simbolo*/}
+        <span className={`transition-transform ${open ? "rotate-180" : ""}`}>
+          ▾
+        </span>
+      </button>{" "}
       <div
         id={`section-${item.name}`}
         className={`grid transition-[grid-template-rows] duration-200 ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
-      > {/*id com o nome, grid, transicao de linhas, duracao, se aberto aparece as linhas, se nao some*/}
-        <div className="overflow-hidden"> {/*corta tudo se der overdflow*/}
-          <ul className="py-1"> {/*padding*/}
-            {item.children?.map((c) => ( // para cada filho dentro dos itens
-              <li key={c.name}> {/*faz uma li contendo o link para as paginas*/}
+      >
+        <div className="overflow-hidden">
+          {" "}
+          <ul className="py-1">
+            {" "}
+            {/*padding*/}
+            {item.children?.map((c) => (
+              <li key={c.name}>
+                {" "}
                 <Link
                   href={withLeadingSlash(c.href)}
                   className="block px-4 py-2 text-sm text-white/80 rounded hover:bg-white/10 hover:text-cyan-300"
-                >{/*block, padding, padding, texto pequeno, cor do texto, redondo, fundo. cor de texto*/}
+                >
                   {c.name}
                 </Link>
               </li>
@@ -52,8 +57,7 @@ export function MobileAccordion({ item }: { item: NavItem }) {
           </ul>
         </div>
       </div>
-      <hr className="my-2 border-white/10" /> 
-      {/*Desenha uma linha horizontal em baixo de cada categoria*/}
+      <hr className="my-2 border-white/10" />
     </div>
   );
 }

@@ -14,10 +14,10 @@ export default function Home() {
         <TrendingSection />
 
         {/* Secao de trailers */}
-        <TrailerSection/>
+        <TrailerSection />
 
         {/*  */}
-        <Popular/>
+        <Popular />
       </main>
     </div>
   );

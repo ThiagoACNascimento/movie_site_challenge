@@ -14,47 +14,42 @@ export default function Hero() {
   // busca uma vez na montagem
   useEffect(() => {
     let mounted = true;
-    (async () => 
-    {
-      try 
-      {
+    (async () => {
+      try {
         setError(null);
 
-        const res = await fetch("/api/tmdb/posterItem?limit=10", { cache: "no-store" });
+        const res = await fetch("/api/tmdb/posterItem?limit=10", {
+          cache: "no-store",
+        });
 
-        if (!res.ok) 
-          throw new Error(`HTTP ${res.status} ${res.statusText}`);
+        if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
 
         const data: ApiResp = await res.json();
 
-        if (!data.ok) 
+        if (!data.ok)
           throw new Error(data.error || "Falha ao carregar imagens");
 
-        if (mounted) 
-          setImgs(data.images?.map(i => i.url) ?? []);
-      } 
-      catch (e: any) 
-      {
-        if (mounted) 
-          setError(e.message || "Erro ao carregar imagens");
+        if (mounted) setImgs(data.images?.map((i) => i.url) ?? []);
+      } catch (e: any) {
+        if (mounted) setError(e.message || "Erro ao carregar imagens");
         console.error("[Hero BG API Error]", e);
       }
     })();
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   // troca aleatória
   useEffect(() => {
-    if (imgs.length <= 1) 
-      return;
+    if (imgs.length <= 1) return;
 
-    const id = setInterval(() => 
-    {
-      setIdx(i => {
+    const id = setInterval(() => {
+      setIdx((i) => {
         let next = i;
-        while (next === i && imgs.length > 1) 
+        while (next === i && imgs.length > 1)
           next = Math.floor(Math.random() * imgs.length);
-        
+
         return next;
       });
     }, INTERVAL_MS);
@@ -64,19 +59,16 @@ export default function Hero() {
 
   // pré-carrega a próxima aleatória
   const nextUrl = useMemo(() => {
-    if (imgs.length < 2) 
-      return null;
+    if (imgs.length < 2) return null;
 
     let next = idx;
-    while (next === idx)
-       next = Math.floor(Math.random() * imgs.length);
+    while (next === idx) next = Math.floor(Math.random() * imgs.length);
 
     return imgs[next];
   }, [imgs, idx]);
 
   useEffect(() => {
-    if (!nextUrl) 
-      return;
+    if (!nextUrl) return;
 
     const img = new Image();
 
@@ -113,7 +105,9 @@ export default function Hero() {
 
       <div className="relative z-20 flex h-full items-center justify-center text-center font-serif px-5 sm:px-6">
         <div className="space-y-4">
-          <h1 className="text-white text-5xl sm:text-6xl font-extrabold tracking-tight">Welcome.</h1>
+          <h1 className="text-white text-5xl sm:text-6xl font-extrabold tracking-tight">
+            Welcome.
+          </h1>
           <h2 className="text-white/95 text-2xl sm:text-3xl font-semibold max-w-4xl mx-auto">
             Millions of movies, TV shows and people to discover. Explore now.
           </h2>

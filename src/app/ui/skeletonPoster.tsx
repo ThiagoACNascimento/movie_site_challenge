@@ -6,7 +6,7 @@ type Props = {
   height?: string;
 };
 
-export default function SkeletonCard({ count = 10, width, height}: Props) {
+export default function SkeletonCard({ count = 10, width, height }: Props) {
   return (
     <>
       {[...Array(count)].map((_, i) => (

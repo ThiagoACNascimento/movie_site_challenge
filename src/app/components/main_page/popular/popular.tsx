@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from "react";
 import ButtonGroup from "@/app/ui/buttonGroup";
-import SkeletonCard from "@/app/ui/skeletonPoster"; 
+import SkeletonCard from "@/app/ui/skeletonPoster";
 import RatingRing from "@/app/ui/rating-ring";
 
 type Category = "streaming" | "tv" | "rent" | "theater";
@@ -35,38 +35,29 @@ export default function Popular() {
 
   useEffect(() => {
     let alive = true;
-    (async () => 
-    {
+    (async () => {
       setLoading(true);
       setError(null);
-      try 
-      {
-        const res = await fetch(`/api/tmdb/popular?category=${category}&limit=20`, 
-        {
-          cache: "no-store",
-        });
+      try {
+        const res = await fetch(
+          `/api/tmdb/popular?category=${category}&limit=20`,
+          {
+            cache: "no-store",
+          },
+        );
 
-        if (!res.ok) 
-          throw new Error(`Erro ${res.status}: ${res.statusText}`);
+        if (!res.ok) throw new Error(`Erro ${res.status}: ${res.statusText}`);
 
-        const data: { ok: boolean; items: Item[]; error?: string } = await res.json();
-        if (!data.ok) 
-          throw new Error(data.error || "Falha na API");
+        const data: { ok: boolean; items: Item[]; error?: string } =
+          await res.json();
+        if (!data.ok) throw new Error(data.error || "Falha na API");
 
-        if (alive) 
-          setItems(data.items ?? []);
-
-      } 
-      catch (e: any) 
-      {
-        if (alive) 
-          setError(e.message || "Erro ao carregar");
+        if (alive) setItems(data.items ?? []);
+      } catch (e: any) {
+        if (alive) setError(e.message || "Erro ao carregar");
         console.error("[Catalog API Error]", e);
-      } 
-      finally 
-      {
-        if (alive) 
-          setLoading(false);
+      } finally {
+        if (alive) setLoading(false);
       }
     })();
 
@@ -78,7 +69,9 @@ export default function Popular() {
   return (
     <section className="max-w-7xl mx-auto w-full px-6 sm:px-10">
       <header className="flex items-center justify-between gap-6">
-        <h3 className="text-white text-2xl font-semibold z-10">What's Popular</h3>
+        <h3 className="text-white text-2xl font-semibold z-10">
+          What's Popular
+        </h3>
 
         <div
           role="tablist"
@@ -136,7 +129,11 @@ export default function Popular() {
                         aria-hidden
                         className="pointer-events-none absolute inset-x-0 -bottom-1 h-20 bg-gradient-to-t from-black to-transparent z-10"
                       />
-                      <a href="#" className="absolute inset-0 z-30" aria-label={it.title} />
+                      <a
+                        href="#"
+                        className="absolute inset-0 z-30"
+                        aria-label={it.title}
+                      />
                     </>
                   ) : (
                     <div className="h-full w-full grid place-items-center text-white/60 text-sm">
@@ -149,8 +146,10 @@ export default function Popular() {
                 </div>
               </div>
 
-              <h4 className="mt-4 line-clamp-2 text-white/90 text-sm font-bold">{it.title}</h4>
-               <p className="text-white/60 text-xs">
+              <h4 className="mt-4 line-clamp-2 text-white/90 text-sm font-bold">
+                {it.title}
+              </h4>
+              <p className="text-white/60 text-xs">
                 {it.month} {it.day}, {it.year}
               </p>
             </article>

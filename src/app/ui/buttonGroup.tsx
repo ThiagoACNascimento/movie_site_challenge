@@ -3,10 +3,10 @@
 import React from "react";
 
 type ButtonGroupProps<T extends string> = {
-  options: T[];                         // Valores possíveis para a busca (ex: "day", "week") como no primeiro botao
-  selected: T;                          // Qual está selecionado pelo usuario
-  onChange: (value: T) => void;         // Mudanca de valor ao clicar 
-  labels?: Partial<Record<T, string>>;  // Nome dos botoes
+  options: T[]; // Valores possíveis para a busca (ex: "day", "week") como no primeiro botao
+  selected: T; // Qual está selecionado pelo usuario
+  onChange: (value: T) => void; // Mudanca de valor ao clicar
+  labels?: Partial<Record<T, string>>; // Nome dos botoes
 };
 
 export default function ButtonGroup<T extends string>({
@@ -30,9 +30,11 @@ export default function ButtonGroup<T extends string>({
           className={`px-4 py-1 rounded-full text-sm font-medium transition-all duration-200
             focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
             focus-visible:ring-blue-400 focus-visible:ring-offset-stone-900
-            ${selected === option
-              ? "bg-blue-600 text-white"
-              : "text-white/75 hover:text-white"}
+            ${
+              selected === option
+                ? "bg-blue-600 text-white"
+                : "text-white/75 hover:text-white"
+            }
           `}
         >
           {labels[option] ?? option}
