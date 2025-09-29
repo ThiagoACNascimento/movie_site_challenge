@@ -18,7 +18,7 @@ export default function Hero() {
       try {
         setError(null);
 
-        const res = await fetch("/api/tmdb/posterItem?limit=10", {
+        const res = await fetch("/api/tmdb/background?limit=10", {
           cache: "no-store",
         });
 
