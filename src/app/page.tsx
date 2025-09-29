@@ -1,5 +1,6 @@
 // app/page.tsx
 import Hero from "./components/main_page/background/BackgroundRotator";
+import FreeSection from "./components/main_page/free/freesection";
 import Popular from "./components/main_page/popular/popular";
 import TrailerSection from "./components/main_page/trailer/trailersection";
 import TrendingSection from "./components/main_page/trending/trendingsection";
@@ -18,6 +19,9 @@ export default function Home() {
 
         {/*  */}
         <Popular />
+
+        {/*Secao de gratis para assistir*/}
+        <FreeSection />
       </main>
     </div>
   );
