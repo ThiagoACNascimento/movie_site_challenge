@@ -76,29 +76,30 @@ async function listByCategory(cat: Category) {
     case "streaming": {
       const [m, t] = await Promise.all([
         tmdbJson(
-          "/discover/movie?with_watch_monetization_types=flatrate&sort_by=popularity.desc",
+          "/discover/movie?watch_region=US&with_watch_monetization_types=flatrate&include_adult=false&sort_by=popularity.desc&language=en-US",
         ),
         tmdbJson(
-          "/discover/tv?with_watch_monetization_types=flatrate&sort_by=popularity.desc",
+          "/discover/tv?watch_region=US&with_watch_monetization_types=flatrate&include_adult=false&sort_by=popularity.desc&language=en-US",
         ),
       ]);
-      const mix = [...(m.results ?? []), ...(t.results ?? [])];
-      return mix.sort(
-        (a, b) => (Number(b.popularity) || 0) - (Number(a.popularity) || 0),
+      return [...m.results, ...t.results].sort(
+        (a, b) => b.popularity - a.popularity,
       );
     }
     case "tv": {
-      const data = await tmdbJson("/discover/tv?sort_by=popularity.desc");
+      const data = await tmdbJson("/tv/on_the_air?language=en-US&page=1");
       return data.results ?? [];
     }
     case "rent": {
       const data = await tmdbJson(
-        "/discover/movie?with_watch_monetization_types=rent&sort_by=popularity.desc",
+        "/discover/movie?watch_region=US&with_watch_monetization_types=rent&include_adult=false&sort_by=popularity.desc&language=en-US",
       );
       return data.results ?? [];
     }
     case "theater": {
-      const data = await tmdbJson("/movie/now_playing");
+      const data = await tmdbJson(
+        "/movie/now_playing?language=en-US&page=1&region=US",
+      );
       return data.results ?? [];
     }
   }

@@ -76,7 +76,7 @@ async function listByCategory(cat: Category) {
     }
     case "tv": {
       const data = await tmdbJson(
-        "/discover/tv?watch_region=BR&with_watch_monetization_types=free|ads&include_adult=false&sort_by=popularity.desc&language=en-US",
+        "/discover/tv?watch_region=US&with_watch_monetization_types=free|ads&include_adult=false&sort_by=popularity.desc&language=en-US",
       );
       return data.results ?? [];
     }
