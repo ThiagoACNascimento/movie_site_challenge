@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import RatingRing from "@/app/ui/rating-ring";
 import ButtonGroup from "@/app/ui/buttonGroup";
 import SkeletonCard from "@/app/ui/skeletonPoster";
+import Image from "next/image";
 
 type Range = "Movie" | "tv";
 
@@ -111,9 +112,11 @@ export default function FreeSection() {
                 <div className="aspect-[2/3] overflow-hidden rounded-xl ring-1 ring-white/10 bg-white/5 group">
                   {it.poster ? (
                     <>
-                      <img
+                      <Image
                         src={it.poster}
                         alt={it.title}
+                        width={500}
+                        height={750}
                         className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                         loading="lazy"
                       />

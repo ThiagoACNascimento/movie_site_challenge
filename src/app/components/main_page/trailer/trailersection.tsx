@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import ButtonGroup from "@/app/ui/buttonGroup";
 import SkeletonCard from "@/app/ui/skeletonPoster";
+import Image from "next/image";
 
 type Category = "popular" | "streaming" | "tv" | "rent" | "theater";
 type Item = {
@@ -124,12 +125,14 @@ export default function TrailerSection() {
               <div className="relative">
                 <div className="aspect-[16/9] overflow-hidden rounded-xl ring-1 ring-white/10 bg-white/5 group">
                   {/*thumb do youtube*/}
-                  <img
+                  <Image
                     src={it.youtubeThumbMax}
                     onError={(e) => {
                       (e.currentTarget as HTMLImageElement).src =
                         it.youtubeThumbHQ;
                     }}
+                    width={1600}
+                    height={900}
                     alt={it.title}
                     className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                     loading="lazy"
