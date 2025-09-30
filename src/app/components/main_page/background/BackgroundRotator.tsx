@@ -84,7 +84,6 @@ export default function Hero() {
             className="absolute inset-0 bg-center bg-cover transition-opacity duration-1000 ease-in-out"
             style={{
               backgroundImage: `url(${url})`,
-              // foco um pouco mais alto para evitar cortar rosto/cabeças
               backgroundPosition: "center 35%",
               opacity: i === idx ? 1 : 0,
             }}

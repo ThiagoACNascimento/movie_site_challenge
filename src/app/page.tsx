@@ -17,7 +17,7 @@ export default function Home() {
         {/* Secao de trailers */}
         <TrailerSection />
 
-        {/*  */}
+        {/*Secao de populares*/}
         <Popular />
 
         {/*Secao de gratis para assistir*/}

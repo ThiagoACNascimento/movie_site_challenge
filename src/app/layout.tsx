@@ -18,13 +18,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <div className="hidden md:block">
-          {" "}
           {/* Topbar só em telas ≥ md */}
           <Topbar />
         </div>
 
         <div className="block md:hidden">
-          {" "}
           {/* Sidebar só em telas < md */}
           <Sidebar />
         </div>

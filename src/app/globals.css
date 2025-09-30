@@ -25,16 +25,14 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Estilo base para Firefox */
 .scrollbar {
-  scrollbar-width: thin; /* thin | auto | none */
-  scrollbar-color: rgba(255, 255, 255, 0.35) transparent; /* thumb | track */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
 }
 
-/* WebKit (Chrome, Edge, Safari) */
 .scrollbar::-webkit-scrollbar {
   height: 8px; /* scroll HORIZONTAL */
-  width: 8px; /* scroll VERTICAL (se usar em colunas tb) */
+  width: 8px; /* scroll VERTICAL */
 }
 
 .scrollbar::-webkit-scrollbar-track {
@@ -50,7 +48,6 @@ body {
   background: rgba(255, 255, 255, 0.45);
 }
 
-/* Só mostra a barra quando o container estiver em :hover (Chrome/Edge/Safari) */
 .scrollbar-hide-until-hover::-webkit-scrollbar {
   background: transparent;
 }
@@ -58,7 +55,6 @@ body {
   background: rgba(255, 255, 255, 0.35);
 }
 
-/* Melhor scroll no iOS */
 .scrollbar {
   -webkit-overflow-scrolling: touch;
 }

@@ -1,4 +1,3 @@
-// app/components/main_page/catalog/catalogSection.tsx
 "use client";
 
 import { useEffect, useState } from "react";

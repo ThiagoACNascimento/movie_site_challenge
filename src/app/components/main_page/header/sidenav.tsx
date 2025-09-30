@@ -58,7 +58,6 @@ export default function Sidebar() {
         aria-modal="true"
         aria-label="Menu"
       >
-        {" "}
         {/* topo do drawer */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
           <Link
@@ -78,16 +77,14 @@ export default function Sidebar() {
         </div>
         {/* conteúdo da sidebar */}
         <div className="p-4 space-y-2 text-white">
-          {" "}
           {links_left.map((item) => (
             <MobileAccordion key={item.name} item={item} />
-          ))}{" "}
-          {/*Para cada item faz a funcao*/}
+          ))}
+
           <div className="pt-2">
-            {" "}
             <h3 className="px-3 pb-1 text-xs uppercase tracking-wider text-white/60">
               Conta
-            </h3>{" "}
+            </h3>
             <ul className="space-y-1">
               {link_right.map((r) => (
                 <li key={r.name}>

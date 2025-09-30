@@ -31,7 +31,6 @@ export default function FreeSection() {
       setError(null);
 
       try {
-        // Usa "category" para bater com a API
         const res = await fetch(`/api/tmdb/free?category=${range}&limit=20`, {
           cache: "no-store",
         });
