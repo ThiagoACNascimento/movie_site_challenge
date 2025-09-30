@@ -15,6 +15,7 @@ export default function Topbar() {
               </h1>
               <span className="h-4 w-10 rounded-full bg-cyan-500 transition-all group-hover:w-12" />
             </Link>
+            <Navlinks_left />
           </div>
 
           {/* Parte da direita do header */}

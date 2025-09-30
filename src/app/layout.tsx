@@ -3,6 +3,7 @@ import "./globals.css";
 import Topbar from "./components/main_page/header/topnav";
 import Sidebar from "./components/main_page/header/sidenav";
 import Hero from "./components/main_page/background/BackgroundRotator";
+import Footer from "./components/main_page/footer/footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -28,6 +29,8 @@ export default function RootLayout({
         </div>
 
         {children}
+
+        <Footer />
       </body>
     </html>
   );

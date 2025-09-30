@@ -69,7 +69,7 @@ export function Navlinks_left() {
   // funcao que mostra os links_left e seus sublinks_left
   return (
     <nav className="hidden md:block">
-      <ul className="flex items-center gap-2 font-bold">
+      <ul className="flex items-center gap-2 font-bold ">
         {links_left.map((item) => {
           // para cada item no mapa de links_left
           return (
@@ -79,7 +79,7 @@ export function Navlinks_left() {
             >
               <button
                 type="button"
-                className="opacity-90 hover:text-cyan-300 p-3 rounded-full hover:bg-[#184f74]"
+                className="opacity-90 hover:text-cyan-300 p-3 rounded-full hover:bg-[#184f74] "
                 aria-haspopup="true"
                 aria-expanded="false"
               >

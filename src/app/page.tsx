@@ -7,7 +7,7 @@ import TrendingSection from "./components/main_page/trending/trendingsection";
 
 export default function Home() {
   return (
-    <div className="bg-black min-h-screen h-600">
+    <div className="bg-black min-h-screen pb-20">
       {/*Fundo e mensagem inicial*/}
       <Hero />
       <main className="grid gap-25">

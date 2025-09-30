@@ -93,7 +93,7 @@ export default function Hero() {
       ) : (
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-br from-stone-900 via-black to-stone-950"
+          className="absolute inset-0 bg-gradient-to-b from-stone-900 via-black to-stone-950"
         />
       )}
 
