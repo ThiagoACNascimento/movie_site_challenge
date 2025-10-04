@@ -5,6 +5,7 @@ import RatingRing from "@/app/ui/rating-ring";
 import ButtonGroup from "@/app/ui/buttonGroup";
 import SkeletonCard from "@/app/ui/skeletonPoster";
 import Image from "next/image";
+import Link from "next/link";
 
 type Range = "day" | "week";
 
@@ -124,11 +125,12 @@ export default function TrendingSection() {
                         aria-hidden
                         className="pointer-events-none absolute inset-x-0 -bottom-1 h-20 bg-gradient-to-t from-black to-transparent z-10"
                       />
-                      <a
-                        href="#"
+                      <Link
+                        href={`/pages/info/${it.id}`}
                         className="absolute inset-0 z-30"
                         aria-label={it.title}
-                      />
+                      ></Link>
+                      <a />
                     </>
                   ) : (
                     <div className="h-full w-full grid place-items-center text-white/60 text-sm">
